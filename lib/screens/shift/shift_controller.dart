@@ -39,7 +39,7 @@ class ShiftController extends GetxController {
 
   @override
   void onInit() {
-    String? semesterId = Get.arguments["semesterId"];
+    String? semesterId = Get.arguments?["semesterId"];
     if (semesterId != null) {
       getListSemesters().then(
         (value) {
