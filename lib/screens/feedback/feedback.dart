@@ -7,6 +7,7 @@ import 'package:evds_examinee/screens/feedback/feedback_controller.dart';
 import 'package:evds_examinee/widgets/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class FeedbackScreen extends StatelessWidget {
   const FeedbackScreen({Key? key}) : super(key: key);
@@ -49,9 +50,14 @@ class FeedbackScreen extends StatelessWidget {
                                 child: const Icon(
                                     CommunityMaterialIcons.file_document),
                               ),
-                              title: Text(data.feedbacks[index].feedbackId,
+                              title: Text(
+                                  data.feedbacks[index].violation.evidence
+                                      .examRoom.examRoomName,
                                   overflow: TextOverflow.ellipsis),
-                              subtitle: Text(
+                              subtitle: Text(DateFormat('dd/MM/yyyy HH:mm')
+                                  .format(
+                                      data.feedbacks[index].lastModifiedDate)),
+                              trailing: Text(
                                 _generateStatusText(
                                     data.feedbacks[index].status),
                                 overflow: TextOverflow.ellipsis,

@@ -114,7 +114,6 @@ class ShiftScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ListTile(
-                                  onTap: () {},
                                   title: Text(
                                     "Date: " +
                                         DateFormat('dd/MM/yyyy').format(

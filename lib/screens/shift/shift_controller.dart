@@ -39,9 +39,21 @@ class ShiftController extends GetxController {
 
   @override
   void onInit() {
-    getListSemesters().then(
-      (value) => getAssignedShift(semesterId: value.first.semesterId),
-    );
+    String? semesterId = Get.arguments["semesterId"];
+    if (semesterId != null) {
+      getListSemesters().then(
+        (value) {
+          final semester =
+              value.firstWhere((element) => element.semesterId == semesterId);
+          currentSemester?.value = semester;
+          return getAssignedShift(semesterId: semesterId);
+        },
+      );
+    } else {
+      getListSemesters().then(
+        (value) => getAssignedShift(semesterId: value.first.semesterId),
+      );
+    }
     super.onInit();
   }
 }

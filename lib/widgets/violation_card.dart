@@ -20,6 +20,7 @@ class ViolationCard extends StatelessWidget {
         splashColor: Colors.blue.withAlpha(30),
         onTap: onTap,
         child: ListTile(
+          contentPadding: const EdgeInsets.all(16.0),
           title: Text(
             violation.evidence.examRoom.examRoomName,
             style: const TextStyle(
@@ -29,13 +30,27 @@ class ViolationCard extends StatelessWidget {
           ),
           subtitle: Padding(
             padding: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              "Created at: ${DateFormat("dd/MM/yyyy HH:mm").format(violation.createdDate)}",
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Room: ${violation.evidence.examRoom.room.roomName}",
+                ),
+                const SizedBox(height: 5),
+                Text(
+                    "Created at: ${DateFormat('dd/MM/yyyy HH:mm').format(violation.createdDate)}")
+              ],
             ),
           ),
-          trailing: const Icon(
-            Icons.chevron_right,
-            size: 28,
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(
+                Icons.chevron_right,
+                size: 28,
+              ),
+            ],
           ),
         ),
       ),

@@ -1,4 +1,4 @@
-import 'package:evds_examinee/models/my_feedback.dart';
+import 'package:evds_examinee/models/feedback.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'feedback_list.g.dart';
 
@@ -6,7 +6,7 @@ part 'feedback_list.g.dart';
 class FeedbackList {
   int totalItems;
   int totalPages;
-  List<MyFeedback> feedbacks;
+  List<Feedback> feedbacks;
   int currentPage;
 
   FeedbackList({

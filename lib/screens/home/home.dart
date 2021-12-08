@@ -39,7 +39,11 @@ class HomeScreen extends StatelessWidget {
                   AssignedShift data = snapshot.data;
                   final assignedShiftDetail = data.assignedShifts[0];
                   return ShiftCard(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.shift, arguments: {
+                        "semesterId": data.selectedSemester.semesterId
+                      });
+                    },
                     thumbnail: SvgPicture.asset(
                       'assets/images/exam.svg',
                       semanticsLabel: "Schedule illustration",

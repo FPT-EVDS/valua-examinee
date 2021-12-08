@@ -8,10 +8,9 @@ part of 'violation.dart';
 
 Violation _$ViolationFromJson(Map<String, dynamic> json) => Violation(
       violationId: json['violationId'] as String,
-      violator:
-          AccountAlternative.fromJson(json['violator'] as Map<String, dynamic>),
+      thumbnailUrl: json['thumbnailUrl'] as String?,
       evidence: Evidence.fromJson(json['evidence'] as Map<String, dynamic>),
-      description: json['description'] as String,
+      description: json['description'] as String?,
       status: $enumDecode(_$ViolationStatusEnumMap, json['status']),
       createdDate: DateTime.parse(json['createdDate'] as String),
       lastModifiedDate: DateTime.parse(json['lastModifiedDate'] as String),
@@ -19,7 +18,7 @@ Violation _$ViolationFromJson(Map<String, dynamic> json) => Violation(
 
 Map<String, dynamic> _$ViolationToJson(Violation instance) => <String, dynamic>{
       'violationId': instance.violationId,
-      'violator': instance.violator,
+      'thumbnailUrl': instance.thumbnailUrl,
       'evidence': instance.evidence,
       'description': instance.description,
       'status': _$ViolationStatusEnumMap[instance.status],

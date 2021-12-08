@@ -7,18 +7,18 @@ part 'violation.g.dart';
 @JsonSerializable()
 class Violation {
   String violationId;
-  AccountAlternative violator;
+  String? thumbnailUrl;
   Evidence evidence;
-  String description;
+  String? description;
   ViolationStatus status;
   DateTime createdDate;
   DateTime lastModifiedDate;
 
   Violation({
     required this.violationId,
-    required this.violator,
+    this.thumbnailUrl,
     required this.evidence,
-    required this.description,
+    this.description,
     required this.status,
     required this.createdDate,
     required this.lastModifiedDate,

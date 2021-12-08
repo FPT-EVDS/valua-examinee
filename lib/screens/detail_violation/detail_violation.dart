@@ -1,9 +1,9 @@
-import 'package:community_material_icon/community_material_icon.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:evds_examinee/models/violation_detail.dart';
 import 'package:evds_examinee/screens/detail_violation/detail_violation_controller.dart';
 import 'package:evds_examinee/widgets/carousel_item.dart';
 import 'package:evds_examinee/widgets/carousel_with_indicator.dart';
+import 'package:evds_examinee/widgets/rich_text_item.dart';
 import 'package:evds_examinee/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -30,8 +30,8 @@ class DetailViolationScreen extends StatelessWidget {
             _showModalBottomForm(context);
           },
           width: double.infinity,
-          color: Colors.red.shade700,
-          label: "Report false violation",
+          color: Theme.of(context).primaryColor,
+          label: "Feedback violation",
           height: 48,
         ),
       ),
@@ -67,37 +67,23 @@ class DetailViolationScreen extends StatelessWidget {
                                     )
                                     .toList()),
                             const SizedBox(height: 20),
-                            Row(
-                              children: [
-                                Icon(
-                                  CommunityMaterialIcons.calendar_range,
-                                  color: Colors.grey.shade800,
-                                  size: 24,
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                  DateFormat("dd/MM/yyyy")
-                                      .format(data.createdDate),
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                const SizedBox(width: 20),
-                                Icon(
-                                  CommunityMaterialIcons.clock_outline,
-                                  color: Colors.grey.shade800,
-                                  size: 24,
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                  DateFormat("HH:mm").format(data.createdDate),
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
+                            RichTextItem(
+                              title: "Created at: ",
+                              content: DateFormat("dd/MM/yyyy HH:mm")
+                                  .format(data.createdDate),
                             ),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 20),
+                            RichTextItem(
+                              title: "Subject: ",
+                              content:
+                                  "${data.evidence.examRoom.subject.subjectCode} - ${data.evidence.examRoom.subject.subjectName}",
+                            ),
+                            const SizedBox(height: 20),
+                            RichTextItem(
+                              title: "Room: ",
+                              content: data.evidence.examRoom.room.roomName,
+                            ),
+                            const SizedBox(height: 20),
                             const Text(
                               "Reported by",
                               style: TextStyle(
@@ -188,23 +174,23 @@ class DetailViolationScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              TextFormField(
-                controller: _controller.contentController,
-                minLines: 10,
-                maxLength: 255,
-                maxLines: 12,
-                keyboardType: TextInputType.multiline,
-                decoration: const InputDecoration(
-                  labelText: "Description",
-                ),
-                validator: MultiValidator([
-                  MinLengthValidator(8, errorText: "Min length is 8"),
-                  RequiredValidator(errorText: "Description is required"),
-                ]),
-              ),
               Expanded(
-                child: Container(),
+                child: TextFormField(
+                  controller: _controller.contentController,
+                  textAlignVertical: TextAlignVertical.top,
+                  maxLines: null,
+                  expands: true,
+                  keyboardType: TextInputType.multiline,
+                  decoration: const InputDecoration(
+                    labelText: "Description",
+                  ),
+                  validator: MultiValidator([
+                    MinLengthValidator(8, errorText: "Min length is 8"),
+                    RequiredValidator(errorText: "Description is required"),
+                  ]),
+                ),
               ),
+              const SizedBox(height: 20),
               Obx(
                 () => RoundButton(
                   onPressed: () {

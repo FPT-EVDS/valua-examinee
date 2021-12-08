@@ -10,7 +10,7 @@ FeedbackList _$FeedbackListFromJson(Map<String, dynamic> json) => FeedbackList(
       totalItems: json['totalItems'] as int,
       totalPages: json['totalPages'] as int,
       feedbacks: (json['feedbacks'] as List<dynamic>)
-          .map((e) => MyFeedback.fromJson(e as Map<String, dynamic>))
+          .map((e) => Feedback.fromJson(e as Map<String, dynamic>))
           .toList(),
       currentPage: json['currentPage'] as int,
     );
