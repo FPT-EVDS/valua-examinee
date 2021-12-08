@@ -13,9 +13,12 @@ class ViolationController extends GetxController {
   final ViolationRepository _violationRepository =
       Get.find<ViolationProvider>();
 
-  Future<void> getOwnViolation({String? search}) async {
+  Future<void> getOwnViolation({String? search, String? semesterId}) async {
     try {
-      final data = _violationRepository.getViolationList(search: search);
+      final data = _violationRepository.getViolationList(
+        search: search,
+        semesterId: semesterId ?? currentSemester!.value.semesterId,
+      );
       violationList.value = data;
     } catch (err) {
       throw Exception(err);
@@ -34,14 +37,16 @@ class ViolationController extends GetxController {
   void handleChangeSemester(Semester? semester) {
     if (semester != null) {
       currentSemester?.value = semester;
-      getOwnViolation();
+      getOwnViolation(semesterId: semester.semesterId);
     }
   }
 
   @override
   void onInit() {
-    getListSemesters();
-    getOwnViolation();
+    getListSemesters().then((value) {
+      currentSemester?.value = value.first;
+      getOwnViolation(semesterId: value.first.semesterId);
+    });
     super.onInit();
   }
 }

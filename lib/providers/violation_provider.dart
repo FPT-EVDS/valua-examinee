@@ -5,8 +5,12 @@ import 'package:evds_examinee/repository/violation_repository.dart';
 
 class ViolationProvider extends BaseProvider implements ViolationRepository {
   @override
-  Future<ViolationList> getViolationList({String? search}) async {
-    final response = await get("/violations");
+  Future<ViolationList> getViolationList(
+      {String? search, String? semesterId}) async {
+    final response = await get("/violations", query: {
+      "search": search,
+      "semesterId:": semesterId,
+    });
     if (response.status.hasError) {
       throw (response.body);
     }
