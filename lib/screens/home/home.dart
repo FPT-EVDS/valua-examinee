@@ -1,5 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:evds_examinee/models/assigned_shift.dart';
 import 'package:evds_examinee/routes/app_pages.dart';
+import 'package:evds_examinee/screens/home/home_controller.dart';
 import 'package:evds_examinee/widgets/card_with_icon.dart';
 import 'package:evds_examinee/widgets/shift_card.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _controller = Get.find<HomeController>();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -18,35 +21,93 @@ class HomeScreen extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Your next shift",
+              children: const [
+                Text(
+                  "Today's exam",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
-                Text(
-                  "View detail",
-                  style: TextStyle(
-                    color: Colors.grey.shade500,
-                    fontSize: 12,
-                  ),
-                )
               ],
             ),
             const SizedBox(height: 20),
-            ShiftCard(
-              thumbnail: SvgPicture.asset(
-                'assets/images/schedule.svg',
-                semanticsLabel: "Schedule illustration",
-                height: 100,
-              ),
-              beginTime: DateTime.now(),
-              endTime:
-                  DateTime.now().add(const Duration(hours: 1, minutes: 30)),
-              date: DateTime.now(),
-              location: "Phòng 101",
+            FutureBuilder(
+              future: _controller.assignedShiftList.value,
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.hasData) {
+                  AssignedShift data = snapshot.data;
+                  final assignedShiftDetail =
+                      data.assignedShifts.assignedShift[data.selectedDate];
+                  if (assignedShiftDetail != null) {
+                    return ShiftCard(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.detailShift, arguments: {
+                          "id": assignedShiftDetail.first.examRoomID,
+                        });
+                      },
+                      thumbnail: SvgPicture.asset(
+                        'assets/images/exam.svg',
+                        semanticsLabel: "Schedule illustration",
+                        height: 100,
+                      ),
+                      beginTime: assignedShiftDetail.first.shift.beginTime,
+                      endTime: assignedShiftDetail.first.shift.finishTime,
+                      date: assignedShiftDetail.first.shift.beginTime,
+                      location: assignedShiftDetail.first.room.roomName,
+                    );
+                  } else {
+                    return Card(
+                      elevation: 2,
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 150,
+                        child: Column(children: [
+                          SvgPicture.asset(
+                            'assets/images/relax.svg',
+                            semanticsLabel: "Schedule illustration",
+                            height: 100,
+                          ),
+                          const SizedBox(height: 15),
+                          Text(
+                            "No exams available!",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ]),
+                      ),
+                    );
+                  }
+                } else if (snapshot.hasError) {
+                  return Card(
+                    elevation: 2,
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 150,
+                      child: Column(children: [
+                        SvgPicture.asset(
+                          'assets/images/relax.svg',
+                          semanticsLabel: "Schedule illustration",
+                          height: 100,
+                        ),
+                        const SizedBox(height: 15),
+                        Text(
+                          "No exams available!",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ]),
+                    ),
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
             const SizedBox(height: 30),
             Row(

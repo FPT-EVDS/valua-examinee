@@ -11,6 +11,7 @@ import 'package:evds_examinee/screens/detail_violation/detail_violation_binding.
 import 'package:evds_examinee/screens/feedback/feedback.dart';
 import 'package:evds_examinee/screens/feedback/feedback_binding.dart';
 import 'package:evds_examinee/screens/home/home.dart';
+import 'package:evds_examinee/screens/home/home_binding.dart';
 import 'package:evds_examinee/screens/login/login.dart';
 import 'package:evds_examinee/screens/login/login_binding.dart';
 import 'package:evds_examinee/screens/main/main_binding.dart';
@@ -36,6 +37,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.home,
       page: () => const HomeScreen(),
+      binding: HomeBinding(),
     ),
     GetPage(
       name: AppRoutes.shift,
