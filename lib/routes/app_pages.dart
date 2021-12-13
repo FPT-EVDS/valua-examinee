@@ -1,10 +1,14 @@
 import 'package:evds_examinee/screens/change_password/change_password.dart';
 import 'package:evds_examinee/screens/change_password/change_password_binding.dart';
+import 'package:evds_examinee/screens/detail_feedback/detail_feedback.dart';
+import 'package:evds_examinee/screens/detail_feedback/detail_feedback_binding.dart';
 import 'package:evds_examinee/screens/detail_profile/detail_profile.dart';
 import 'package:evds_examinee/screens/detail_profile/detail_profile_binding.dart';
 import 'package:evds_examinee/screens/detail_shift/detail_shift.dart';
 import 'package:evds_examinee/screens/detail_violation/detail_violation.dart';
 import 'package:evds_examinee/screens/detail_violation/detail_violation_binding.dart';
+import 'package:evds_examinee/screens/feedback/feedback.dart';
+import 'package:evds_examinee/screens/feedback/feedback_binding.dart';
 import 'package:evds_examinee/screens/home/home.dart';
 import 'package:evds_examinee/screens/login/login.dart';
 import 'package:evds_examinee/screens/login/login_binding.dart';
@@ -41,6 +45,16 @@ class AppPages {
       name: AppRoutes.violation,
       page: () => const ViolationScreen(),
       binding: ViolationBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.feedback,
+      page: () => const FeedbackScreen(),
+      binding: FeedbackBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.detailFeedback,
+      page: () => const DetailFeedbackScreen(),
+      binding: DetailFeedbackBinding(),
     ),
     GetPage(
       name: AppRoutes.detailViolation,

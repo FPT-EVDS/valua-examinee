@@ -97,7 +97,9 @@ class HomeScreen extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                   title: "Feedbacks",
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.feedback);
+                  },
                 ),
               ],
             ),
