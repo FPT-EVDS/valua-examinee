@@ -4,10 +4,12 @@ class CarouselItem {
   CarouselItem({
     required this.id,
     required this.resource,
+    required this.title,
   });
 
   final String id;
   final String resource;
+  final String title;
 }
 
 class CarouselItemThumbnail extends StatelessWidget {

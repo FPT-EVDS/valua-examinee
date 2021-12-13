@@ -67,7 +67,7 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
               Container(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  "Image ${currentIndex + 1}",
+                  widget.galleryItems[currentIndex].title,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 17.0,

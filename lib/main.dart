@@ -1,5 +1,4 @@
 import 'package:evds_examinee/providers/auth_provider.dart';
-import 'package:evds_examinee/providers/violation_provider.dart';
 import 'package:evds_examinee/routes/routes.dart';
 import 'package:evds_examinee/services/auth_service.dart';
 import 'package:evds_examinee/theme/theme.dart';

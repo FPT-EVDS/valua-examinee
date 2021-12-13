@@ -1,20 +1,21 @@
 import 'package:evds_examinee/enums/violation_status.dart';
 import 'package:evds_examinee/models/account_alternative.dart';
-import 'package:evds_examinee/models/evidence.dart';
+import 'package:evds_examinee/models/violation_detail_evidence.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'violation.g.dart';
+
+part 'violation_detail.g.dart';
 
 @JsonSerializable()
-class Violation {
+class ViolationDetail {
   String violationId;
   AccountAlternative violator;
-  Evidence evidence;
+  ViolationDetailEvidence evidence;
   String description;
   ViolationStatus status;
   DateTime createdDate;
   DateTime lastModifiedDate;
 
-  Violation({
+  ViolationDetail({
     required this.violationId,
     required this.violator,
     required this.evidence,
@@ -24,8 +25,8 @@ class Violation {
     required this.lastModifiedDate,
   });
 
-  factory Violation.fromJson(Map<String, dynamic> json) =>
-      _$ViolationFromJson(json);
+  factory ViolationDetail.fromJson(Map<String, dynamic> json) =>
+      _$ViolationDetailFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ViolationToJson(this);
+  Map<String, dynamic> toJson() => _$ViolationDetailToJson(this);
 }

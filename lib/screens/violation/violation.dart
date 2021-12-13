@@ -1,5 +1,6 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:evds_examinee/models/violation_list.dart';
+import 'package:evds_examinee/routes/app_pages.dart';
 import 'package:evds_examinee/screens/violation/violation_controller.dart';
 import 'package:evds_examinee/widgets/no_data.dart';
 import 'package:evds_examinee/widgets/violation_card.dart';
@@ -33,7 +34,14 @@ class ViolationScreen extends StatelessWidget {
                     child: data.totalItems > 0
                         ? ListView.separated(
                             itemBuilder: (context, index) => ViolationCard(
-                              onTap: () {},
+                              onTap: () {
+                                Get.toNamed(
+                                  AppRoutes.detailViolation,
+                                  arguments: {
+                                    "id": data.violations[index].violationId,
+                                  },
+                                );
+                              },
                               violation: data.violations[index],
                             ),
                             separatorBuilder: (context, index) =>

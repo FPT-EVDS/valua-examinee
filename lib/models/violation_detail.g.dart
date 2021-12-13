@@ -1,23 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'violation.dart';
+part of 'violation_detail.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Violation _$ViolationFromJson(Map<String, dynamic> json) => Violation(
+ViolationDetail _$ViolationDetailFromJson(Map<String, dynamic> json) =>
+    ViolationDetail(
       violationId: json['violationId'] as String,
       violator:
           AccountAlternative.fromJson(json['violator'] as Map<String, dynamic>),
-      evidence: Evidence.fromJson(json['evidence'] as Map<String, dynamic>),
+      evidence: ViolationDetailEvidence.fromJson(
+          json['evidence'] as Map<String, dynamic>),
       description: json['description'] as String,
       status: $enumDecode(_$ViolationStatusEnumMap, json['status']),
       createdDate: DateTime.parse(json['createdDate'] as String),
       lastModifiedDate: DateTime.parse(json['lastModifiedDate'] as String),
     );
 
-Map<String, dynamic> _$ViolationToJson(Violation instance) => <String, dynamic>{
+Map<String, dynamic> _$ViolationDetailToJson(ViolationDetail instance) =>
+    <String, dynamic>{
       'violationId': instance.violationId,
       'violator': instance.violator,
       'evidence': instance.evidence,
