@@ -5,6 +5,7 @@ abstract class AppRoutes {
   static const login = '/login';
   static const home = '/home';
   static const shift = '/shift';
+  static const violation = '/violation';
   static const detailShift = '/shift/detail';
   static const notification = '/notification';
   static const detailProfile = '/profile/detail';

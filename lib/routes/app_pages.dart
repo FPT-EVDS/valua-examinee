@@ -10,6 +10,8 @@ import 'package:evds_examinee/screens/main/main_binding.dart';
 import 'package:evds_examinee/screens/main/main_screen.dart';
 import 'package:evds_examinee/screens/shift/shift.dart';
 import 'package:evds_examinee/screens/shift/shift_binding.dart';
+import 'package:evds_examinee/screens/violation/violation.dart';
+import 'package:evds_examinee/screens/violation/violation_binding.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
@@ -32,6 +34,11 @@ class AppPages {
       name: AppRoutes.shift,
       page: () => const ShiftScreen(),
       binding: ShiftBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.violation,
+      page: () => const ViolationScreen(),
+      binding: ViolationBinding(),
     ),
     GetPage(
       name: AppRoutes.detailShift,

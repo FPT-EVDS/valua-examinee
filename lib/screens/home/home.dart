@@ -1,5 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:evds_examinee/providers/auth_provider.dart';
 import 'package:evds_examinee/routes/app_pages.dart';
+import 'package:evds_examinee/widgets/card_with_icon.dart';
 import 'package:evds_examinee/widgets/shift_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -68,82 +70,34 @@ class HomeScreen extends StatelessWidget {
               mainAxisSpacing: 10,
               shrinkWrap: true,
               children: [
-                Card(
-                  elevation: 2,
-                  child: InkWell(
-                    splashColor: Colors.blue.withAlpha(30),
-                    onTap: () {
-                      Get.toNamed(AppRoutes.shift);
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          CommunityMaterialIcons.calendar_month,
-                          size: 70,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        const SizedBox(height: 10),
-                        const Text(
-                          "Schedule",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
+                CardWithIcon(
+                  icon: Icon(
+                    CommunityMaterialIcons.calendar_month,
+                    size: 70,
+                    color: Theme.of(context).primaryColor,
                   ),
+                  title: "Schedule",
+                  onTap: () {},
                 ),
-                Card(
-                  elevation: 2,
-                  child: InkWell(
-                    splashColor: Colors.blue.withAlpha(30),
-                    onTap: () {},
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          CommunityMaterialIcons.alarm_light,
-                          size: 70,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        const SizedBox(height: 10),
-                        const Text(
-                          "Violation",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
+                CardWithIcon(
+                  icon: Icon(
+                    CommunityMaterialIcons.alarm_light,
+                    size: 70,
+                    color: Theme.of(context).primaryColor,
                   ),
+                  title: "Violation",
+                  onTap: () {
+                    Get.toNamed(AppRoutes.violation);
+                  },
                 ),
-                Card(
-                  elevation: 2,
-                  child: InkWell(
-                    splashColor: Colors.blue.withAlpha(30),
-                    onTap: () {},
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          CommunityMaterialIcons.file_document,
-                          size: 70,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        const SizedBox(height: 10),
-                        const Text(
-                          "Feedbacks",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
+                CardWithIcon(
+                  icon: Icon(
+                    CommunityMaterialIcons.file_document,
+                    size: 70,
+                    color: Theme.of(context).primaryColor,
                   ),
+                  title: "Feedbacks",
+                  onTap: () {},
                 ),
               ],
             ),
