@@ -1,8 +1,11 @@
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:evds_examinee/models/assigned_shift.dart';
 import 'package:evds_examinee/routes/app_pages.dart';
 import 'package:evds_examinee/screens/shift/shift_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ShiftScreen extends StatelessWidget {
@@ -10,6 +13,7 @@ class ShiftScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DateFormat _timeFormat = DateFormat("HH:mm");
     final _controller = Get.find<ShiftController>();
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +39,7 @@ class ShiftScreen extends StatelessWidget {
               () => TableCalendar(
                 focusedDay: _controller.currentFocusedDay.value,
                 firstDay: DateTime.utc(2021, 1, 1),
-                lastDay: DateTime.now(),
+                lastDay: DateTime.now().add(const Duration(days: 365)),
                 calendarFormat: _controller.calendarFormat,
                 availableCalendarFormats: const {CalendarFormat.week: 'Week'},
                 headerVisible: false,
@@ -65,43 +69,105 @@ class ShiftScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: ListView.builder(
-                itemCount: 2,
-                itemBuilder: (context, index) => Card(
-                  elevation: 2,
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 8.0,
-                    horizontal: 4.0,
-                  ),
-                  child: ListTile(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.detailShift);
-                    },
-                    title: Text(
-                      "14:15 - 15:45",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: const Padding(
-                      padding: EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        "SU21_PRF192_10W - Room: 101",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w500,
+              child: Obx(
+                () => FutureBuilder(
+                  future: _controller.assignedShiftList.value,
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.hasData) {
+                      AssignedShift data = snapshot.data;
+                      final assignShiftDetail =
+                          data.assignedShifts.assignedShift[data.selectedDate];
+                      if (assignShiftDetail == null) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                "assets/images/no_shift.svg",
+                                height: 180,
+                              ),
+                              const SizedBox(height: 15),
+                              Text(
+                                "No shift assigned",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey.shade700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      return ListView.builder(
+                          itemCount: data.totalItems,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              elevation: 2,
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                                horizontal: 4.0,
+                              ),
+                              child: ListTile(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.detailShift);
+                                },
+                                title: Text(
+                                  "${_timeFormat.format(assignShiftDetail[index].shift.beginTime)} - ${_timeFormat.format(assignShiftDetail[index].shift.finishTime)}",
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                subtitle: Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text(
+                                    "${assignShiftDetail[index].examRoomName} - Room: ${assignShiftDetail[index].room.roomName}",
+                                    style: const TextStyle(
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                trailing: const Icon(
+                                  Icons.chevron_right,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            );
+                          });
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              "assets/images/no_shift.svg",
+                              height: 180,
+                            ),
+                            const SizedBox(height: 15),
+                            Text(
+                              snapshot.error.toString(),
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey.shade700,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ),
-                    trailing: const Icon(
-                      Icons.chevron_right,
-                      color: Colors.black,
-                    ),
-                  ),
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

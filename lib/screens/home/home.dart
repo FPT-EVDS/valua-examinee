@@ -1,5 +1,4 @@
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:evds_examinee/providers/auth_provider.dart';
 import 'package:evds_examinee/routes/app_pages.dart';
 import 'package:evds_examinee/widgets/card_with_icon.dart';
 import 'package:evds_examinee/widgets/shift_card.dart';
@@ -77,7 +76,9 @@ class HomeScreen extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                   title: "Schedule",
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.shift);
+                  },
                 ),
                 CardWithIcon(
                   icon: Icon(
