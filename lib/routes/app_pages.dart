@@ -5,6 +5,7 @@ import 'package:evds_examinee/screens/detail_feedback/detail_feedback_binding.da
 import 'package:evds_examinee/screens/detail_profile/detail_profile.dart';
 import 'package:evds_examinee/screens/detail_profile/detail_profile_binding.dart';
 import 'package:evds_examinee/screens/detail_shift/detail_shift.dart';
+import 'package:evds_examinee/screens/detail_shift/detail_shift_binding.dart';
 import 'package:evds_examinee/screens/detail_violation/detail_violation.dart';
 import 'package:evds_examinee/screens/detail_violation/detail_violation_binding.dart';
 import 'package:evds_examinee/screens/feedback/feedback.dart';
@@ -64,6 +65,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.detailShift,
       page: () => const DetailShiftScreen(),
+      binding: DetailShiftBinding(),
     ),
     GetPage(
       name: AppRoutes.detailProfile,

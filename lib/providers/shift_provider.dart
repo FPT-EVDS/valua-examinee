@@ -1,4 +1,5 @@
 import 'package:evds_examinee/models/assigned_shift.dart';
+import 'package:evds_examinee/models/detail_shift.dart';
 import 'package:evds_examinee/providers/base_provider.dart';
 import 'package:evds_examinee/repository/shift_repository.dart';
 
@@ -14,5 +15,14 @@ class ShiftProvider extends BaseProvider implements ShiftRepository {
       throw (response.body);
     }
     return AssignedShift.fromJson(response.body);
+  }
+
+  @override
+  Future<DetailShift> getShiftDetail(String id) async {
+    final response = await get("/examRooms/$id");
+    if (response.status.hasError) {
+      throw (response.body);
+    }
+    return DetailShift.fromJson(response.body);
   }
 }

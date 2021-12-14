@@ -112,7 +112,12 @@ class ShiftScreen extends StatelessWidget {
                               ),
                               child: ListTile(
                                 onTap: () {
-                                  Get.toNamed(AppRoutes.detailShift);
+                                  Get.toNamed(
+                                    AppRoutes.detailShift,
+                                    arguments: {
+                                      "id": assignShiftDetail[index].examRoomID,
+                                    },
+                                  );
                                 },
                                 title: Text(
                                   "${_timeFormat.format(assignShiftDetail[index].shift.beginTime)} - ${_timeFormat.format(assignShiftDetail[index].shift.finishTime)}",

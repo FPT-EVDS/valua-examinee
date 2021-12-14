@@ -1,6 +1,10 @@
+import 'package:evds_examinee/models/detail_shift.dart';
+import 'package:evds_examinee/screens/detail_shift/detail_shift_controller.dart';
 import 'package:evds_examinee/widgets/avatar_with_title.dart';
 import 'package:evds_examinee/widgets/rich_text_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class DetailShiftScreen extends StatelessWidget {
   const DetailShiftScreen({Key? key}) : super(key: key);
@@ -8,110 +12,138 @@ class DetailShiftScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _controller = Get.find<DetailShiftController>();
+    final _timeFormat = DateFormat("HH:mm");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          "SU21_PRF192_10W",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+        title: Obx(
+          () => Text(
+            _controller.appBarTitle.value,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  RichTextItem(title: "Date: ", content: "23/08/2021"),
-                  RichTextItem(title: "Time: ", content: "14:15 - 15:45"),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  RichTextItem(title: "Room: ", content: "201"),
-                  RichTextItem(title: "Violation count: ", content: "0"),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: const [
-                  RichTextItem(
-                    title: "Shift Manager: ",
-                    content: "Johnny Walker",
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Examinees list",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  Text(
-                    "View all",
-                    style: TextStyle(
-                      color: Colors.grey.shade500,
-                      fontSize: 12,
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(width: 28),
-                  itemCount: 4,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    // FIXME: change to dynamic length here
-                    if (itemLength > 4 && index == 3) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CircleAvatar(
-                            radius: 32,
-                            backgroundColor: Theme.of(context).primaryColor,
-                            child: const Text(
-                              "+${itemLength - 3}",
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Obx(
+              () => FutureBuilder(
+                future: _controller.shiftDetail.value,
+                builder:
+                    ((BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    DetailShift detailShift = snapshot.data;
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            RichTextItem(
+                                title: "Date: ",
+                                content: DateFormat("dd/MM/yyyy")
+                                    .format(detailShift.shift.beginTime)),
+                            RichTextItem(
+                                title: "Time: ",
+                                content:
+                                    "${_timeFormat.format(detailShift.shift.beginTime)} - ${_timeFormat.format(detailShift.shift.finishTime)}"),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            RichTextItem(
+                                title: "Subject: ",
+                                content: detailShift.subject.subjectCode),
+                            RichTextItem(
+                                title: "Room: ",
+                                content: detailShift.room.roomName),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              "Assigned staff",
                               style: TextStyle(
-                                letterSpacing: 1.5,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
                             ),
+                          ],
+                        ),
+                        ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(detailShift.staff.imageUrl),
                           ),
-                        ],
-                      );
-                    }
-                    return const AvatarWithTitle(
-                      radius: 32,
-                      imageUrl:
-                          "https://images.unsplash.com/photo-1628890923662-2cb23c2e0cfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-                      title: "Nico Marks",
-                      subtitle: "SE123456",
+                          title: Text(detailShift.staff.fullName),
+                          subtitle: Text(detailShift.staff.companyId),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              "Examinees list",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: detailShift.examSeats.length,
+                          itemBuilder: (context, index) {
+                            final examinee =
+                                detailShift.examSeats[index].examinee;
+                            return ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(examinee.imageUrl),
+                              ),
+                              title: Text(examinee.fullName),
+                              subtitle: Text(examinee.companyId),
+                              trailing: Text(
+                                  "Pos ${detailShift.examSeats[index].position}"),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                      ],
                     );
-                  },
-                ),
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        snapshot.error.toString(),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }),
               ),
-              const SizedBox(height: 20),
-            ],
+            ),
           ),
         ),
       ),
