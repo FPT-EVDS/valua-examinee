@@ -1,6 +1,5 @@
 import 'package:evds_examinee/providers/auth_provider.dart';
 import 'package:evds_examinee/providers/shift_provider.dart';
-import 'package:evds_examinee/screens/home/home_binding.dart';
 import 'package:evds_examinee/screens/home/home_controller.dart';
 import 'package:evds_examinee/screens/main/main_controller.dart';
 import 'package:evds_examinee/screens/notification/notification_controller.dart';

@@ -1,12 +1,11 @@
-import 'package:community_material_icon/community_material_icon.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:evds_examinee/models/assigned_shift.dart';
-import 'package:evds_examinee/routes/app_pages.dart';
+import 'package:evds_examinee/models/semester.dart';
 import 'package:evds_examinee/screens/shift/shift_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class ShiftScreen extends StatelessWidget {
   const ShiftScreen({Key? key}) : super(key: key);
@@ -21,53 +20,56 @@ class ShiftScreen extends StatelessWidget {
         elevation: 0,
         title: const Text("Assigned shift"),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(CommunityMaterialIcons.calendar),
-            tooltip: 'Choose date',
-            onPressed: () {
-              _controller.handleDatePicker(context);
-            },
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Obx(
-              () => TableCalendar(
-                focusedDay: _controller.currentFocusedDay.value,
-                firstDay: DateTime.utc(2021, 1, 1),
-                lastDay: DateTime.now().add(const Duration(days: 365)),
-                calendarFormat: _controller.calendarFormat,
-                availableCalendarFormats: const {CalendarFormat.week: 'Week'},
-                headerVisible: false,
-                startingDayOfWeek: StartingDayOfWeek.monday,
-                onDaySelected: _controller.handleSelectDate,
-                selectedDayPredicate: _controller.selectedDatePredicate,
-                onPageChanged: _controller.handleChangePage,
-                calendarStyle: CalendarStyle(
-                  defaultDecoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    shape: BoxShape.circle,
-                  ),
-                  weekendDecoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    shape: BoxShape.circle,
-                  ),
-                  selectedDecoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    shape: BoxShape.circle,
-                  ),
-                  todayDecoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(0.7),
-                    shape: BoxShape.circle,
-                  ),
-                ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: FutureBuilder(
+                future: _controller.getListSemesters(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    return SizedBox(
+                      width: 300,
+                      child: DropdownSearch<Semester>(
+                        mode: Mode.DIALOG,
+                        popupTitle: const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text(
+                            "Choose semester",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        showSelectedItems: true,
+                        itemAsString: (item) => item!.semesterName,
+                        compareFn: (item, selectedItem) =>
+                            item!.semesterId == selectedItem!.semesterId,
+                        items: snapshot.data,
+                        dropdownSearchDecoration: const InputDecoration(
+                          labelText: "Semester",
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 12.0,
+                            vertical: 4.0,
+                          ),
+                        ),
+                        onChanged: _controller.handleChangeSemester,
+                        selectedItem: _controller.currentSemester?.value ??
+                            snapshot.data[0],
+                      ),
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
               ),
             ),
-            const SizedBox(height: 10),
             Expanded(
               child: Obx(
                 () => FutureBuilder(
@@ -76,9 +78,8 @@ class ShiftScreen extends StatelessWidget {
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
                       AssignedShift data = snapshot.data;
-                      final assignShiftDetail =
-                          data.assignedShifts.assignedShift[data.selectedDate];
-                      if (assignShiftDetail == null) {
+                      final assignShiftDetail = data.assignedShifts;
+                      if (assignShiftDetail.isEmpty) {
                         return Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -110,64 +111,86 @@ class ShiftScreen extends StatelessWidget {
                                 vertical: 8.0,
                                 horizontal: 4.0,
                               ),
-                              child: ListTile(
-                                onTap: () {
-                                  Get.toNamed(
-                                    AppRoutes.detailShift,
-                                    arguments: {
-                                      "id": assignShiftDetail[index].examRoomID,
-                                    },
-                                  );
-                                },
-                                title: Text(
-                                  "${_timeFormat.format(assignShiftDetail[index].shift.beginTime)} - ${_timeFormat.format(assignShiftDetail[index].shift.finishTime)}",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text(
-                                    "${assignShiftDetail[index].examRoomName} - Room: ${assignShiftDetail[index].room.roomName}",
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListTile(
+                                  onTap: () {},
+                                  title: Text(
+                                    "Date: " +
+                                        DateFormat('dd/MM/yyyy').format(
+                                            assignShiftDetail[index]
+                                                .shift
+                                                .beginTime),
                                     style: const TextStyle(
-                                      color: Colors.black87,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ),
-                                trailing: const Icon(
-                                  Icons.chevron_right,
-                                  color: Colors.black,
+                                  subtitle: Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Subject: ${assignShiftDetail[index].subject.subjectCode}",
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8.0),
+                                        Text(
+                                          "Room: ${assignShiftDetail[index].room.roomName}",
+                                          style: const TextStyle(
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  trailing: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${_timeFormat.format(assignShiftDetail[index].shift.beginTime)} "
+                                        "- ${_timeFormat.format(assignShiftDetail[index].shift.finishTime)}",
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
                           });
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              "assets/images/no_shift.svg",
-                              height: 180,
-                            ),
-                            const SizedBox(height: 15),
-                            Text(
-                              snapshot.error.toString(),
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey.shade700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
                     }
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/images/no_shift.svg",
+                            height: 180,
+                          ),
+                          const SizedBox(height: 15),
+                          Text(
+                            "There is no exams in this semester",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),

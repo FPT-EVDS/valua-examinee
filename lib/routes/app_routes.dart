@@ -9,7 +9,6 @@ abstract class AppRoutes {
   static const feedback = '/feedback';
   static const detailFeedback = '/feedback/:id';
   static const detailViolation = '/violation/:id';
-  static const detailShift = '/shift/:id';
   static const notification = '/notification';
   static const detailProfile = '/profile/detail';
   static const changePassword = '/password/change';

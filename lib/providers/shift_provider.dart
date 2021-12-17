@@ -1,15 +1,13 @@
 import 'package:evds_examinee/models/assigned_shift.dart';
-import 'package:evds_examinee/models/detail_shift.dart';
+import 'package:evds_examinee/models/shift_detail.dart';
 import 'package:evds_examinee/providers/base_provider.dart';
 import 'package:evds_examinee/repository/shift_repository.dart';
 
 class ShiftProvider extends BaseProvider implements ShiftRepository {
   @override
-  Future<AssignedShift> getAssignedShift({DateTime? date}) async {
+  Future<AssignedShift> getAssignedShift({String? semesterId}) async {
     final response = await get("/examRooms/assigned", query: {
-      "date": date != null
-          ? date.toIso8601String()
-          : DateTime.now().toIso8601String(),
+      "semesterId": semesterId,
     });
     if (response.status.hasError) {
       throw (response.body);
@@ -18,11 +16,11 @@ class ShiftProvider extends BaseProvider implements ShiftRepository {
   }
 
   @override
-  Future<DetailShift> getShiftDetail(String id) async {
+  Future<ShiftDetail> getShiftDetail(String id) async {
     final response = await get("/examRooms/$id");
     if (response.status.hasError) {
       throw (response.body);
     }
-    return DetailShift.fromJson(response.body);
+    return ShiftDetail.fromJson(response.body);
   }
 }

@@ -37,49 +37,19 @@ class HomeScreen extends StatelessWidget {
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
                   AssignedShift data = snapshot.data;
-                  final assignedShiftDetail =
-                      data.assignedShifts.assignedShift[data.selectedDate];
-                  if (assignedShiftDetail != null) {
-                    return ShiftCard(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.detailShift, arguments: {
-                          "id": assignedShiftDetail.first.examRoomID,
-                        });
-                      },
-                      thumbnail: SvgPicture.asset(
-                        'assets/images/exam.svg',
-                        semanticsLabel: "Schedule illustration",
-                        height: 100,
-                      ),
-                      beginTime: assignedShiftDetail.first.shift.beginTime,
-                      endTime: assignedShiftDetail.first.shift.finishTime,
-                      date: assignedShiftDetail.first.shift.beginTime,
-                      location: assignedShiftDetail.first.room.roomName,
-                    );
-                  } else {
-                    return Card(
-                      elevation: 2,
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 150,
-                        child: Column(children: [
-                          SvgPicture.asset(
-                            'assets/images/relax.svg',
-                            semanticsLabel: "Schedule illustration",
-                            height: 100,
-                          ),
-                          const SizedBox(height: 15),
-                          Text(
-                            "No exams available!",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey.shade600,
-                            ),
-                          ),
-                        ]),
-                      ),
-                    );
-                  }
+                  final assignedShiftDetail = data.assignedShifts[0];
+                  return ShiftCard(
+                    onTap: () {},
+                    thumbnail: SvgPicture.asset(
+                      'assets/images/exam.svg',
+                      semanticsLabel: "Schedule illustration",
+                      height: 100,
+                    ),
+                    beginTime: assignedShiftDetail.shift.beginTime,
+                    endTime: assignedShiftDetail.shift.finishTime,
+                    date: assignedShiftDetail.shift.beginTime,
+                    location: assignedShiftDetail.room.roomName,
+                  );
                 } else if (snapshot.hasError) {
                   return Card(
                     elevation: 2,

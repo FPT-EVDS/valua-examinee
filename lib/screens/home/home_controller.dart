@@ -9,7 +9,7 @@ class HomeController extends GetxController {
 
   Future<void> getAssignedShift({DateTime? date}) async {
     try {
-      final data = _shiftRepository.getAssignedShift(date: date);
+      final data = _shiftRepository.getAssignedShift();
       assignedShiftList.value = data;
     } catch (err) {
       throw Exception(err);
