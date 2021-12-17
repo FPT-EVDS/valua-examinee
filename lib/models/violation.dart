@@ -1,5 +1,4 @@
 import 'package:evds_examinee/enums/violation_status.dart';
-import 'package:evds_examinee/models/account_alternative.dart';
 import 'package:evds_examinee/models/evidence.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'violation.g.dart';

@@ -9,7 +9,7 @@ class ViolationProvider extends BaseProvider implements ViolationRepository {
       {String? search, String? semesterId}) async {
     final response = await get("/violations", query: {
       "search": search,
-      "semesterId:": semesterId,
+      "semesterId": semesterId,
     });
     if (response.status.hasError) {
       throw (response.body);

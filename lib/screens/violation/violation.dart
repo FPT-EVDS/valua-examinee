@@ -65,6 +65,10 @@ class ViolationScreen extends StatelessWidget {
                               snapshot.data[0],
                         ),
                       );
+                    } else if (snapshot.hasError) {
+                      return const Center(
+                        child: Text("Can't load data"),
+                      );
                     }
                     return const Center(
                       child: CircularProgressIndicator(),
