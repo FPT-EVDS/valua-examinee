@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class CarouselWithIndicator extends StatefulWidget {
-  final List<String> itemList;
+  final List<CarouselItem> itemList;
   const CarouselWithIndicator({Key? key, required this.itemList})
       : super(key: key);
 
@@ -106,26 +106,22 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
     );
   }
 
-  _createCarouselItems(List<String> carouselListItems) {
+  _createCarouselItems(List<CarouselItem> carouselListItems) {
     return carouselListItems
         .map(
-          (imageUrl) => Image.network(
-            imageUrl,
+          (carouselItem) => Image.network(
+            carouselItem.resource,
             fit: BoxFit.cover,
           ),
         )
         .toList();
   }
 
-  void open(BuildContext context, final int index, List<String> itemList) {
+  void open(
+      BuildContext context, final int index, List<CarouselItem> itemList) {
     Get.to(
       () => GalleryPhotoViewWrapper(
-        galleryItems: itemList
-            .asMap()
-            .entries
-            .map((entry) =>
-                CarouselItem(id: entry.key.toString(), resource: entry.value))
-            .toList(),
+        galleryItems: itemList,
         backgroundDecoration: const BoxDecoration(
           color: Colors.black,
         ),

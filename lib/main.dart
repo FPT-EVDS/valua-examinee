@@ -25,7 +25,7 @@ class AppBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(AuthService());
-    Get.put(AuthProvider());
+    Get.lazyPut(() => AuthProvider());
   }
 }
 
