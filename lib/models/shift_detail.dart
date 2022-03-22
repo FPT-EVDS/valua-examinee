@@ -1,5 +1,5 @@
-import 'package:evds_examinee/enums/shift_status.dart';
-import 'package:evds_examinee/models/room.dart';
+import 'package:valua_examinee/enums/shift_status.dart';
+import 'package:valua_examinee/models/room.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'shift_detail.g.dart';
 

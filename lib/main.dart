@@ -1,7 +1,8 @@
-import 'package:evds_examinee/providers/auth_provider.dart';
-import 'package:evds_examinee/routes/routes.dart';
-import 'package:evds_examinee/services/auth_service.dart';
-import 'package:evds_examinee/theme/theme.dart';
+import 'package:valua_examinee/constants/app.dart';
+import 'package:valua_examinee/providers/auth_provider.dart';
+import 'package:valua_examinee/routes/routes.dart';
+import 'package:valua_examinee/services/auth_service.dart';
+import 'package:valua_examinee/theme/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +19,7 @@ Future<void> initServices() async {
     final license = await rootBundle.loadString('assets/font/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
-  await Get.putAsync(() => GetStorage.init('evds_examinee'));
+  await Get.putAsync(() => GetStorage.init(AppConstant.storageKey));
 }
 
 class AppBinding extends Bindings {
@@ -34,13 +35,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final GetStorage _storage = GetStorage('evds_examinee');
+    final GetStorage _storage = GetStorage(AppConstant.storageKey);
     return GetMaterialApp(
-      title: 'EVDS Examinee',
+      title: 'Valua Examinee',
       theme: AppThemes(context).defaultTheme,
       defaultTransition: Transition.fade,
       initialBinding: AppBinding(),
-      initialRoute: _storage.read("access_token") != null
+      initialRoute: _storage.read(AppConstant.accessToken) != null
           ? AppRoutes.main
           : AppRoutes.login,
       debugShowCheckedModeBanner: false,

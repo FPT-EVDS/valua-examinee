@@ -1,15 +1,15 @@
-import 'package:evds_examinee/screens/change_password/change_password.dart';
-import 'package:evds_examinee/screens/change_password/change_password_binding.dart';
-import 'package:evds_examinee/screens/detail_profile/detail_profile.dart';
-import 'package:evds_examinee/screens/detail_profile/detail_profile_binding.dart';
-import 'package:evds_examinee/screens/home/home.dart';
-import 'package:evds_examinee/screens/home/home_binding.dart';
-import 'package:evds_examinee/screens/login/login.dart';
-import 'package:evds_examinee/screens/login/login_binding.dart';
-import 'package:evds_examinee/screens/main/main_binding.dart';
-import 'package:evds_examinee/screens/main/main_screen.dart';
-import 'package:evds_examinee/screens/shift/shift.dart';
-import 'package:evds_examinee/screens/shift/shift_binding.dart';
+import 'package:valua_examinee/screens/change_password/change_password.dart';
+import 'package:valua_examinee/screens/change_password/change_password_binding.dart';
+import 'package:valua_examinee/screens/detail_profile/detail_profile.dart';
+import 'package:valua_examinee/screens/detail_profile/detail_profile_binding.dart';
+import 'package:valua_examinee/screens/home/home.dart';
+import 'package:valua_examinee/screens/home/home_binding.dart';
+import 'package:valua_examinee/screens/login/login.dart';
+import 'package:valua_examinee/screens/login/login_binding.dart';
+import 'package:valua_examinee/screens/main/main_binding.dart';
+import 'package:valua_examinee/screens/main/main_screen.dart';
+import 'package:valua_examinee/screens/shift/shift.dart';
+import 'package:valua_examinee/screens/shift/shift_binding.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';

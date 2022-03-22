@@ -1,6 +1,6 @@
-import 'package:evds_examinee/models/assigned_shift.dart';
-import 'package:evds_examinee/providers/shift_provider.dart';
-import 'package:evds_examinee/repository/shift_repository.dart';
+import 'package:valua_examinee/models/assigned_shift.dart';
+import 'package:valua_examinee/providers/shift_provider.dart';
+import 'package:valua_examinee/repository/shift_repository.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {

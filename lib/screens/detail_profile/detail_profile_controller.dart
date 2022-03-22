@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:cool_alert/cool_alert.dart';
-import 'package:evds_examinee/models/account.dart';
-import 'package:evds_examinee/providers/auth_provider.dart';
-import 'package:evds_examinee/repository/auth_repository.dart';
+import 'package:valua_examinee/constants/app.dart';
+import 'package:valua_examinee/models/account.dart';
+import 'package:valua_examinee/providers/auth_provider.dart';
+import 'package:valua_examinee/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -20,12 +21,13 @@ class DetailProfileController extends GetxController {
   late final dynamic gender;
   final AuthRepository _provider = Get.find<AuthProvider>();
   final isLoading = false.obs;
-  final GetStorage _storage = GetStorage('evds_examinee');
+  final GetStorage _storage = GetStorage(AppConstant.storageKey);
   final DateFormat _dateFormat = DateFormat("dd/MM/yyyy");
 
   @override
   void onInit() {
-    currentUser = Account.fromJson(jsonDecode(_storage.read("user")));
+    currentUser =
+        Account.fromJson(jsonDecode(_storage.read(AppConstant.appUser)));
     emailController = TextEditingController(text: currentUser.email);
     birthdateController = TextEditingController(
         text: _dateFormat.format(DateTime.parse(currentUser.birthdate)));

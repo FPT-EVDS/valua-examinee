@@ -1,4 +1,4 @@
-import 'package:evds_examinee/models/shift_detail.dart';
+import 'package:valua_examinee/models/shift_detail.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'assigned_shift.g.dart';
 

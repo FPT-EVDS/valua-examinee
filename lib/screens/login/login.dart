@@ -1,5 +1,5 @@
-import 'package:evds_examinee/screens/login/login_controller.dart';
-import 'package:evds_examinee/widgets/round_button.dart';
+import 'package:valua_examinee/screens/login/login_controller.dart';
+import 'package:valua_examinee/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(
-            "\u00a9 EVDS for Examinee 2021, All rights reserved",
+            "\u00a9 Valua for Examinee 2021, All rights reserved",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.grey.shade500,
@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
             children: [
               Center(
                 child: Image.asset(
-                  "assets/icons/evds_logo_right.png",
+                  "assets/icons/valua.png",
                   fit: BoxFit.cover,
                   height: 200,
                 ),

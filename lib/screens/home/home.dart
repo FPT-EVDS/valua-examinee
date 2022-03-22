@@ -1,9 +1,9 @@
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:evds_examinee/models/assigned_shift.dart';
-import 'package:evds_examinee/routes/app_pages.dart';
-import 'package:evds_examinee/screens/home/home_controller.dart';
-import 'package:evds_examinee/widgets/card_with_icon.dart';
-import 'package:evds_examinee/widgets/shift_card.dart';
+import 'package:valua_examinee/models/assigned_shift.dart';
+import 'package:valua_examinee/routes/app_pages.dart';
+import 'package:valua_examinee/screens/home/home_controller.dart';
+import 'package:valua_examinee/widgets/card_with_icon.dart';
+import 'package:valua_examinee/widgets/shift_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';

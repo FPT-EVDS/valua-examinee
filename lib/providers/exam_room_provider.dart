@@ -1,6 +1,6 @@
-import 'package:evds_examinee/models/assigned_shift.dart';
-import 'package:evds_examinee/providers/base_provider.dart';
-import 'package:evds_examinee/repository/exam_room_repository.dart';
+import 'package:valua_examinee/models/assigned_shift.dart';
+import 'package:valua_examinee/providers/base_provider.dart';
+import 'package:valua_examinee/repository/exam_room_repository.dart';
 
 class ExamRoomProvider extends BaseProvider implements ExamRoomRepository {
   @override

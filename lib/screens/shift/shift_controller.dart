@@ -1,9 +1,9 @@
-import 'package:evds_examinee/models/assigned_shift.dart';
-import 'package:evds_examinee/models/semester.dart';
-import 'package:evds_examinee/providers/exam_room_provider.dart';
-import 'package:evds_examinee/providers/semester_provider.dart';
-import 'package:evds_examinee/repository/exam_room_repository.dart';
-import 'package:evds_examinee/repository/semester_repository.dart';
+import 'package:valua_examinee/models/assigned_shift.dart';
+import 'package:valua_examinee/models/semester.dart';
+import 'package:valua_examinee/providers/exam_room_provider.dart';
+import 'package:valua_examinee/providers/semester_provider.dart';
+import 'package:valua_examinee/repository/exam_room_repository.dart';
+import 'package:valua_examinee/repository/semester_repository.dart';
 import 'package:get/get.dart';
 
 class ShiftController extends GetxController {

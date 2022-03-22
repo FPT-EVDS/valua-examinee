@@ -1,6 +1,6 @@
-import 'package:evds_examinee/models/semester_list.dart';
-import 'package:evds_examinee/providers/base_provider.dart';
-import 'package:evds_examinee/repository/semester_repository.dart';
+import 'package:valua_examinee/models/semester_list.dart';
+import 'package:valua_examinee/providers/base_provider.dart';
+import 'package:valua_examinee/repository/semester_repository.dart';
 
 class SemesterProvider extends BaseProvider implements SemesterRepository {
   @override

@@ -1,5 +1,5 @@
-import 'package:evds_examinee/models/account.dart';
-import 'package:evds_examinee/models/app_user.dart';
+import 'package:valua_examinee/models/account.dart';
+import 'package:valua_examinee/models/app_user.dart';
 
 abstract class AuthRepository {
   Future<String> refreshToken();

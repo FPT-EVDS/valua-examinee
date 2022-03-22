@@ -1,9 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:evds_examinee/screens/home/home.dart';
-import 'package:evds_examinee/screens/main/main_controller.dart';
-import 'package:evds_examinee/screens/notification/notification.dart';
-import 'package:evds_examinee/screens/profile/profile.dart';
+import 'package:valua_examinee/screens/home/home.dart';
+import 'package:valua_examinee/screens/main/main_controller.dart';
+import 'package:valua_examinee/screens/notification/notification.dart';
+import 'package:valua_examinee/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +27,7 @@ class MainScreen extends StatelessWidget {
             title: Obx(
               () => controller.tabIndex.value == 0
                   ? Image.asset(
-                      "assets/icons/evds_logo_right.png",
+                      "assets/icons/valua.png",
                       height: 96,
                       width: 96,
                     )

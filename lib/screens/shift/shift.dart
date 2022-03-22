@@ -1,8 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:evds_examinee/models/assigned_shift.dart';
-import 'package:evds_examinee/models/semester.dart';
-import 'package:evds_examinee/models/shift_detail.dart';
-import 'package:evds_examinee/screens/shift/shift_controller.dart';
+import 'package:valua_examinee/models/assigned_shift.dart';
+import 'package:valua_examinee/models/semester.dart';
+import 'package:valua_examinee/models/shift_detail.dart';
+import 'package:valua_examinee/screens/shift/shift_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
