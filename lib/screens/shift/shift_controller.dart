@@ -1,21 +1,21 @@
 import 'package:evds_examinee/models/assigned_shift.dart';
 import 'package:evds_examinee/models/semester.dart';
+import 'package:evds_examinee/providers/exam_room_provider.dart';
 import 'package:evds_examinee/providers/semester_provider.dart';
-import 'package:evds_examinee/providers/shift_provider.dart';
+import 'package:evds_examinee/repository/exam_room_repository.dart';
 import 'package:evds_examinee/repository/semester_repository.dart';
-import 'package:evds_examinee/repository/shift_repository.dart';
 import 'package:get/get.dart';
 
 class ShiftController extends GetxController {
   final assignedShiftList = Future<AssignedShift?>.value().obs;
   final Rx<Semester>? currentSemester = null;
-  final ShiftRepository _shiftRepository = Get.find<ShiftProvider>();
+  final ExamRoomRepository _provider = Get.find<ExamRoomProvider>();
   final SemesterRepository _semesterRepository = Get.find<SemesterProvider>();
 
   Future<void> getAssignedShift({String? semesterId}) async {
     try {
       assignedShiftList.value =
-          _shiftRepository.getAssignedShift(semesterId: semesterId);
+          _provider.getAssignedShift(semesterId: semesterId);
     } catch (err) {
       throw Exception(err);
     }
@@ -23,7 +23,8 @@ class ShiftController extends GetxController {
 
   Future<List<Semester>> getListSemesters() async {
     try {
-      final data = await _semesterRepository.getSemesters();
+      // Get actived semesters only
+      final data = await _semesterRepository.getSemesters(status: 1);
       return data.semesters;
     } catch (err) {
       throw Exception(err);

@@ -115,28 +115,6 @@ class HomeScreen extends StatelessWidget {
                     Get.toNamed(AppRoutes.shift);
                   },
                 ),
-                CardWithIcon(
-                  icon: Icon(
-                    CommunityMaterialIcons.alarm_light,
-                    size: 70,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  title: "Violation",
-                  onTap: () {
-                    Get.toNamed(AppRoutes.violation);
-                  },
-                ),
-                CardWithIcon(
-                  icon: Icon(
-                    CommunityMaterialIcons.file_document,
-                    size: 70,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  title: "Feedbacks",
-                  onTap: () {
-                    Get.toNamed(AppRoutes.feedback);
-                  },
-                ),
               ],
             ),
           ],
