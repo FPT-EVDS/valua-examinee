@@ -8,22 +8,16 @@ part 'semester.g.dart';
 class Semester {
   String semesterId;
   String semesterName;
-  List<Subject> subjects;
   String beginDate;
   String endDate;
   bool isActive;
-  DateTime createdDate;
-  DateTime lastModifiedDate;
 
   Semester({
     required this.semesterId,
     required this.semesterName,
-    required this.subjects,
     required this.beginDate,
     required this.endDate,
     required this.isActive,
-    required this.createdDate,
-    required this.lastModifiedDate,
   });
 
   factory Semester.fromJson(Map<String, dynamic> json) =>

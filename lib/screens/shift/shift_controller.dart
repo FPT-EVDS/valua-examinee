@@ -52,7 +52,10 @@ class ShiftController extends GetxController {
       );
     } else {
       getListSemesters().then(
-        (value) => getAssignedShift(semesterId: value.first.semesterId),
+        (value) {
+          currentSemester?.value = value.first;
+          getAssignedShift(semesterId: value.first.semesterId);
+        },
       );
     }
     super.onInit();

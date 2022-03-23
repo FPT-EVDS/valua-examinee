@@ -1,7 +1,7 @@
-import 'package:valua_examinee/constants/app.dart';
-import 'package:valua_examinee/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:valua_examinee/constants/app.dart';
+import 'package:valua_examinee/routes/app_pages.dart';
 
 class AuthService extends GetxService {
   final _storage = GetStorage(AppConstant.storageKey);

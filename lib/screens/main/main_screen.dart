@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:badges/badges.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:valua_examinee/screens/home/home.dart';
 import 'package:valua_examinee/screens/main/main_controller.dart';
@@ -6,6 +7,7 @@ import 'package:valua_examinee/screens/notification/notification.dart';
 import 'package:valua_examinee/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:valua_examinee/services/local_notification_service.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -70,18 +72,25 @@ class MainScreen extends StatelessWidget {
             currentIndex: controller.tabIndex.value,
             unselectedFontSize: 12,
             selectedFontSize: 12,
-            items: const [
-              BottomNavigationBarItem(
+            items: [
+              const BottomNavigationBarItem(
                 icon: Icon(CommunityMaterialIcons.home_outline),
                 activeIcon: Icon(CommunityMaterialIcons.home),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(CommunityMaterialIcons.bell_outline),
-                activeIcon: Icon(CommunityMaterialIcons.bell),
+                icon: Obx(
+                  () => Badge(
+                    child: const Icon(CommunityMaterialIcons.bell_outline),
+                    showBadge: LocalNotificationService.hasUnreadMessage.value,
+                    elevation: 0,
+                    position: BadgePosition.topEnd(top: 0, end: 0),
+                  ),
+                ),
+                activeIcon: const Icon(CommunityMaterialIcons.bell),
                 label: 'Notification',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(CommunityMaterialIcons.account_circle_outline),
                 activeIcon: Icon(CommunityMaterialIcons.account_circle),
                 label: 'Profile',

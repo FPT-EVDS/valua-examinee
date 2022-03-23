@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
                   AssignedShift data = snapshot.data;
-                  final assignedShiftDetail = data.assignedShifts[0];
+                  final assignedShiftDetail = data.currentShift;
                   return ShiftCard(
                     onTap: () {
                       Get.toNamed(AppRoutes.shift, arguments: {

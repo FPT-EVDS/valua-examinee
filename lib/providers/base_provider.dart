@@ -1,12 +1,12 @@
 import 'package:valua_examinee/constants/app.dart';
-import 'package:valua_examinee/providers/auth_provider.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:valua_examinee/providers/auth_provider.dart';
 
 class BaseProvider extends GetConnect {
   // final _baseUrl = 'http://10.0.2.2:8080';
   final _baseUrlOnRealDevice = "http://192.168.1.10:8080";
-  final GetStorage _storage = GetStorage(AppConstant.storageKey);
+  final _storage = GetStorage(AppConstant.storageKey);
 
   @override
   void onInit() {
@@ -18,7 +18,7 @@ class BaseProvider extends GetConnect {
     httpClient.timeout = const Duration(seconds: 15);
 
     httpClient.addRequestModifier<dynamic>((request) async {
-      String? token = _storage.read(AppConstant.storageKey);
+      String? token = _storage.read(AppConstant.accessToken);
       if (token != null && !request.url.path.endsWith("login")) {
         request.headers['Authorization'] = 'Bearer $token';
       }
@@ -34,7 +34,7 @@ class BaseProvider extends GetConnect {
         request.headers['Authorization'] = 'Bearer $token';
       } catch (error) {
         _storage.remove(AppConstant.accessToken);
-        _storage.remove(AppConstant.storageKey);
+        _storage.remove(AppConstant.refreshToken);
         _storage.remove(AppConstant.appUser);
       }
       return request;

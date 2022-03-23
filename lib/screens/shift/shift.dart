@@ -1,7 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:valua_examinee/models/assigned_shift.dart';
 import 'package:valua_examinee/models/semester.dart';
-import 'package:valua_examinee/models/shift_detail.dart';
+import 'package:valua_examinee/models/shift_detail.dart' hide Semester;
 import 'package:valua_examinee/screens/shift/shift_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -133,30 +133,7 @@ class ShiftScreen extends StatelessWidget {
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
                       AssignedShift data = snapshot.data;
-                      final assignShiftDetail = data.assignedShifts;
-                      if (assignShiftDetail.isEmpty) {
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                "assets/images/no_shift.svg",
-                                height: 180,
-                              ),
-                              const SizedBox(height: 15),
-                              Text(
-                                "No shift assigned",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey.shade700,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
+                      final assignShiftDetail = data.currentShift;
                       return RefreshIndicator(
                         onRefresh: () async {
                           await _controller.getAssignedShift(
@@ -166,7 +143,7 @@ class ShiftScreen extends StatelessWidget {
                         child: ListView.builder(
                           itemCount: data.totalItems,
                           itemBuilder: (context, index) => _buildShiftCard(
-                              context, index, assignShiftDetail[index]),
+                              context, index, assignShiftDetail),
                         ),
                       );
                     }
