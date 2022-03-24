@@ -1,3 +1,4 @@
+import 'package:valua_examinee/providers/attendance_provider.dart';
 import 'package:valua_examinee/providers/auth_provider.dart';
 import 'package:valua_examinee/providers/notification_provider.dart';
 import 'package:valua_examinee/providers/shift_provider.dart';
@@ -17,5 +18,6 @@ class MainBinding extends Bindings {
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<ShiftProvider>(() => ShiftProvider());
     Get.lazyPut<NotificationProvider>(() => NotificationProvider());
+    Get.lazyPut<AttendanceProvider>(() => AttendanceProvider());
   }
 }

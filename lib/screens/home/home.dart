@@ -49,9 +49,9 @@ class HomeScreen extends StatelessWidget {
                       semanticsLabel: "Schedule illustration",
                       height: 100,
                     ),
-                    beginTime: assignedShiftDetail.shift.beginTime,
-                    endTime: assignedShiftDetail.shift.finishTime,
-                    date: assignedShiftDetail.shift.beginTime,
+                    beginTime: assignedShiftDetail.shift.beginTime.toLocal(),
+                    endTime: assignedShiftDetail.shift.finishTime.toLocal(),
+                    date: assignedShiftDetail.shift.beginTime.toLocal(),
                     location: assignedShiftDetail.room.roomName,
                   );
                 } else if (snapshot.hasError) {

@@ -8,6 +8,7 @@ import 'package:valua_examinee/screens/login/login.dart';
 import 'package:valua_examinee/screens/login/login_binding.dart';
 import 'package:valua_examinee/screens/main/main_binding.dart';
 import 'package:valua_examinee/screens/main/main_screen.dart';
+import 'package:valua_examinee/screens/qr_scanner/qr_scanner.dart';
 import 'package:valua_examinee/screens/shift/shift.dart';
 import 'package:valua_examinee/screens/shift/shift_binding.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: AppRoutes.login,
-      page: () => const LoginScreen(),
+      page: () => LoginScreen(),
       transition: Transition.rightToLeft,
       binding: LoginBinding(),
     ),
@@ -48,6 +49,10 @@ class AppPages {
       name: AppRoutes.main,
       page: () => const MainScreen(),
       binding: MainBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.qr,
+      page: () => const QRScannerScreen(),
     )
   ];
 }
