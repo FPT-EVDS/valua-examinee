@@ -54,7 +54,6 @@ class ProfileController extends GetxController {
       _storage.remove(AppConstant.refreshToken);
       _storage.remove(AppConstant.refreshToken);
     }
-    // FIXME: Remove if when settings and term is initialize
     if (menuData[index].to == AppRoutes.changePassword) {
       Get.toNamed(menuData[index].to);
     }

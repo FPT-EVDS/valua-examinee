@@ -33,27 +33,64 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             FutureBuilder(
-              future: _controller.assignedShiftList.value,
+              future: _controller.assignedShiftFuture.value,
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
                   AssignedShift data = snapshot.data;
-                  final assignedShiftDetail = data.currentShift;
-                  return ShiftCard(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.shift, arguments: {
-                        "semesterId": data.selectedSemester.semesterId
-                      });
-                    },
-                    thumbnail: SvgPicture.asset(
-                      'assets/images/exam.svg',
-                      semanticsLabel: "Schedule illustration",
-                      height: 100,
-                    ),
-                    beginTime: assignedShiftDetail.shift.beginTime.toLocal(),
-                    endTime: assignedShiftDetail.shift.finishTime.toLocal(),
-                    date: assignedShiftDetail.shift.beginTime.toLocal(),
-                    location: assignedShiftDetail.room.roomName,
-                  );
+                  final currentShift = data.currentShift;
+                  final nextShift = data.nextShift;
+                  return currentShift != null
+                      ? ShiftCard(
+                          onTap: () {
+                            Get.toNamed(AppRoutes.shift);
+                          },
+                          thumbnail: SvgPicture.asset(
+                            'assets/images/exam.svg',
+                            semanticsLabel: "Schedule illustration",
+                            height: 100,
+                          ),
+                          beginTime: currentShift.shift.beginTime.toLocal(),
+                          endTime: currentShift.shift.finishTime.toLocal(),
+                          date: currentShift.shift.beginTime.toLocal(),
+                          location: currentShift.room.roomName,
+                        )
+                      : nextShift != null
+                          ? ShiftCard(
+                              onTap: () {
+                                Get.toNamed(AppRoutes.shift);
+                              },
+                              thumbnail: SvgPicture.asset(
+                                'assets/images/exam.svg',
+                                semanticsLabel: "Schedule illustration",
+                                height: 100,
+                              ),
+                              beginTime: nextShift.shift.beginTime.toLocal(),
+                              endTime: nextShift.shift.finishTime.toLocal(),
+                              date: nextShift.shift.beginTime.toLocal(),
+                              location: nextShift.room.roomName,
+                            )
+                          : Card(
+                              elevation: 2,
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 150,
+                                child: Column(children: [
+                                  SvgPicture.asset(
+                                    'assets/images/relax.svg',
+                                    semanticsLabel: "Schedule illustration",
+                                    height: 100,
+                                  ),
+                                  const SizedBox(height: 15),
+                                  Text(
+                                    "No shifts available!",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                ]),
+                              ),
+                            );
                 } else if (snapshot.hasError) {
                   return Card(
                     elevation: 2,

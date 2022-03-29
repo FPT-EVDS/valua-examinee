@@ -9,15 +9,15 @@ part of 'semester.dart';
 Semester _$SemesterFromJson(Map<String, dynamic> json) => Semester(
       semesterId: json['semesterId'] as String,
       semesterName: json['semesterName'] as String,
-      beginDate: json['beginDate'] as String,
-      endDate: json['endDate'] as String,
+      beginDate: DateTime.parse(json['beginDate'] as String),
+      endDate: DateTime.parse(json['endDate'] as String),
       isActive: json['isActive'] as bool,
     );
 
 Map<String, dynamic> _$SemesterToJson(Semester instance) => <String, dynamic>{
       'semesterId': instance.semesterId,
       'semesterName': instance.semesterName,
-      'beginDate': instance.beginDate,
-      'endDate': instance.endDate,
+      'beginDate': instance.beginDate.toIso8601String(),
+      'endDate': instance.endDate.toIso8601String(),
       'isActive': instance.isActive,
     };

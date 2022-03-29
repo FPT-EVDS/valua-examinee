@@ -9,8 +9,12 @@ part of 'assigned_shift.dart';
 AssignedShift _$AssignedShiftFromJson(Map<String, dynamic> json) =>
     AssignedShift(
       totalItems: json['totalItems'] as int,
-      currentShift:
-          ShiftDetail.fromJson(json['currentShift'] as Map<String, dynamic>),
+      currentShift: json['currentShift'] == null
+          ? null
+          : ShiftDetail.fromJson(json['currentShift'] as Map<String, dynamic>),
+      nextShift: json['nextShift'] == null
+          ? null
+          : ShiftDetail.fromJson(json['nextShift'] as Map<String, dynamic>),
       selectedSemester: SelectedSemester.fromJson(
           json['selectedSemester'] as Map<String, dynamic>),
       upcomingShifts: (json['upcomingShifts'] as List<dynamic>)
@@ -25,6 +29,7 @@ Map<String, dynamic> _$AssignedShiftToJson(AssignedShift instance) =>
     <String, dynamic>{
       'totalItems': instance.totalItems,
       'currentShift': instance.currentShift,
+      'nextShift': instance.nextShift,
       'selectedSemester': instance.selectedSemester,
       'upcomingShifts': instance.upcomingShifts,
       'finishedShifts': instance.finishedShifts,

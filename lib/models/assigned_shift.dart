@@ -1,18 +1,20 @@
-import 'package:valua_examinee/models/shift_detail.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:valua_examinee/models/shift_detail.dart';
 part 'assigned_shift.g.dart';
 
 @JsonSerializable()
 class AssignedShift {
   int totalItems;
-  ShiftDetail currentShift;
+  ShiftDetail? currentShift;
+  ShiftDetail? nextShift;
   SelectedSemester selectedSemester;
   List<ShiftDetail> upcomingShifts;
   List<ShiftDetail> finishedShifts;
 
   AssignedShift({
     required this.totalItems,
-    required this.currentShift,
+    this.currentShift,
+    this.nextShift,
     required this.selectedSemester,
     required this.upcomingShifts,
     required this.finishedShifts,

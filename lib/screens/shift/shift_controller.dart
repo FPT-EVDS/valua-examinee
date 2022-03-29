@@ -1,16 +1,19 @@
+import 'package:get/get.dart';
 import 'package:valua_examinee/models/assigned_shift.dart';
 import 'package:valua_examinee/models/semester.dart';
 import 'package:valua_examinee/providers/exam_room_provider.dart';
 import 'package:valua_examinee/providers/semester_provider.dart';
 import 'package:valua_examinee/repository/exam_room_repository.dart';
 import 'package:valua_examinee/repository/semester_repository.dart';
-import 'package:get/get.dart';
 
 class ShiftController extends GetxController {
   final assignedShiftList = Future<AssignedShift?>.value().obs;
   final Rx<Semester>? currentSemester = null;
   final ExamRoomRepository _provider = Get.find<ExamRoomProvider>();
   final SemesterRepository _semesterRepository = Get.find<SemesterProvider>();
+  RxList<String> sectionTitles =
+      ["Next exam", "Upcoming exams", "Finished exams"].obs;
+  RxList<bool> isExpandedList = RxList<bool>();
 
   Future<void> getAssignedShift({String? semesterId}) async {
     try {
@@ -40,6 +43,7 @@ class ShiftController extends GetxController {
 
   @override
   void onInit() {
+    isExpandedList.value = List.generate(sectionTitles.length, (index) => true);
     String? semesterId = Get.arguments?["semesterId"];
     if (semesterId != null) {
       getListSemesters().then(
@@ -52,10 +56,7 @@ class ShiftController extends GetxController {
       );
     } else {
       getListSemesters().then(
-        (value) {
-          currentSemester?.value = value.first;
-          getAssignedShift(semesterId: value.first.semesterId);
-        },
+        (value) => getAssignedShift(semesterId: value.first.semesterId),
       );
     }
     super.onInit();
