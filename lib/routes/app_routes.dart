@@ -4,7 +4,7 @@ abstract class AppRoutes {
   static const main = '/';
   static const login = '/login';
   static const home = '/home';
-  static const shift = '/shift';
+  static const shift = '/examRooms/assigned';
   static const qr = '/qr';
   static const notification = '/notification';
   static const detailProfile = '/profile/detail';
