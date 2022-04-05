@@ -55,7 +55,9 @@ class ProfileController extends GetxController {
     // if logout
     if (menuData[index].to == AppRoutes.login) {
       GetStorage _storage = GetStorage(AppConstant.storageKey);
-      _storage.erase();
+      _storage.remove(AppConstant.accessToken);
+      _storage.remove(AppConstant.refreshToken);
+      _storage.remove(AppConstant.appUser);
     }
     if (menuData[index].to == AppRoutes.changePassword) {
       Get.toNamed(menuData[index].to);
