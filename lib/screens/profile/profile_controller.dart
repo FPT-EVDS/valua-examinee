@@ -36,23 +36,26 @@ class ProfileController extends GetxController {
     ),
   ];
   final AuthRepository authRepository = Get.find<AuthProvider>();
-  late final Account currentUser;
+  final currentUser = Rx<Account?>(null);
   final GetStorage _storage = GetStorage(AppConstant.storageKey);
 
   @override
   void onInit() {
-    currentUser =
+    currentUser.value =
         Account.fromJson(jsonDecode(_storage.read(AppConstant.appUser)));
     super.onInit();
+  }
+
+  Future<void> refreshUser() async {
+    currentUser.value =
+        Account.fromJson(jsonDecode(_storage.read(AppConstant.appUser)));
   }
 
   void handleMenuTap(int index) {
     // if logout
     if (menuData[index].to == AppRoutes.login) {
       GetStorage _storage = GetStorage(AppConstant.storageKey);
-      _storage.remove(AppConstant.accessToken);
-      _storage.remove(AppConstant.refreshToken);
-      _storage.remove(AppConstant.refreshToken);
+      _storage.erase();
     }
     if (menuData[index].to == AppRoutes.changePassword) {
       Get.toNamed(menuData[index].to);

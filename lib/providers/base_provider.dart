@@ -5,7 +5,7 @@ import 'package:valua_examinee/providers/auth_provider.dart';
 
 class BaseProvider extends GetConnect {
   // final _baseUrl = 'http://10.0.2.2:8080';
-  final _baseUrlOnRealDevice = "http://192.168.1.10:8080";
+  final _baseUrlOnRealDevice = AppConstant.apiUrl;
   final _storage = GetStorage(AppConstant.storageKey);
 
   @override
