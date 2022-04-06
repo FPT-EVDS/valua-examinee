@@ -42,7 +42,9 @@ class HomeScreen extends StatelessWidget {
                   return currentShift != null
                       ? ShiftCard(
                           onTap: () {
-                            Get.toNamed(AppRoutes.shift);
+                            Get.toNamed(AppRoutes.shift, arguments: {
+                              "semesterId": data.selectedSemester.semesterId,
+                            });
                           },
                           thumbnail: SvgPicture.asset(
                             'assets/images/exam.svg',
@@ -57,7 +59,10 @@ class HomeScreen extends StatelessWidget {
                       : nextShift != null
                           ? ShiftCard(
                               onTap: () {
-                                Get.toNamed(AppRoutes.shift);
+                                Get.toNamed(AppRoutes.shift, arguments: {
+                                  "semesterId":
+                                      data.selectedSemester.semesterId,
+                                });
                               },
                               thumbnail: SvgPicture.asset(
                                 'assets/images/exam.svg',

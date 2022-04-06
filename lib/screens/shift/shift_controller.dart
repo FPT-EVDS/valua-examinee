@@ -8,7 +8,7 @@ import 'package:valua_examinee/repository/semester_repository.dart';
 
 class ShiftController extends GetxController {
   final assignedShiftList = Future<AssignedShift?>.value().obs;
-  final Rx<Semester>? currentSemester = null;
+  final currentSemester = Rx<Semester?>(null);
   final ExamRoomRepository _provider = Get.find<ExamRoomProvider>();
   final SemesterRepository _semesterRepository = Get.find<SemesterProvider>();
   RxList<String> sectionTitles =
