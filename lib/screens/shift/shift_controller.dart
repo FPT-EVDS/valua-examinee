@@ -36,7 +36,7 @@ class ShiftController extends GetxController {
 
   void handleChangeSemester(Semester? semester) {
     if (semester != null) {
-      currentSemester?.value = semester;
+      currentSemester.value = semester;
       getAssignedShift(semesterId: semester.semesterId);
     }
   }
@@ -50,7 +50,7 @@ class ShiftController extends GetxController {
         (value) {
           final semester =
               value.firstWhere((element) => element.semesterId == semesterId);
-          currentSemester?.value = semester;
+          currentSemester.value = semester;
           return getAssignedShift(semesterId: semesterId);
         },
       );
