@@ -1,4 +1,4 @@
-import 'package:evds_examinee/models/semester.dart';
+import 'package:valua_examinee/models/semester.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'semester_list.g.dart';
 

@@ -1,6 +1,6 @@
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:evds_examinee/screens/change_password/change_password_controller.dart';
-import 'package:evds_examinee/widgets/round_button.dart';
+import 'package:valua_examinee/screens/change_password/change_password_controller.dart';
+import 'package:valua_examinee/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
@@ -18,7 +18,7 @@ class ChangePasswordScreen extends StatelessWidget {
         title: const Text("Change password"),
         centerTitle: true,
       ),
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
         child: SingleChildScrollView(

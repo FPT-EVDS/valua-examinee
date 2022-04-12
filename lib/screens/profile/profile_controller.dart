@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:evds_examinee/models/account.dart';
-import 'package:evds_examinee/providers/auth_provider.dart';
-import 'package:evds_examinee/repository/auth_repository.dart';
-import 'package:evds_examinee/routes/app_pages.dart';
+import 'package:valua_examinee/constants/app.dart';
+import 'package:valua_examinee/models/account.dart';
+import 'package:valua_examinee/providers/auth_provider.dart';
+import 'package:valua_examinee/repository/auth_repository.dart';
+import 'package:valua_examinee/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -29,40 +30,35 @@ class ProfileController extends GetxController {
       to: AppRoutes.changePassword,
     ),
     MenuItem(
-      icon: CommunityMaterialIcons.cog,
-      title: "Settings",
-      to: "#",
-    ),
-    MenuItem(
-      icon: CommunityMaterialIcons.file_document,
-      title: "Terms & Policies",
-      to: "#",
-    ),
-    MenuItem(
       icon: CommunityMaterialIcons.logout_variant,
       title: "Logout",
       to: AppRoutes.login,
     ),
   ];
   final AuthRepository authRepository = Get.find<AuthProvider>();
-  late final Account currentUser;
-  final GetStorage _storage = GetStorage('evds_examinee');
+  final currentUser = Rx<Account?>(null);
+  final GetStorage _storage = GetStorage(AppConstant.storageKey);
 
   @override
   void onInit() {
-    currentUser = Account.fromJson(jsonDecode(_storage.read("user")));
+    currentUser.value =
+        Account.fromJson(jsonDecode(_storage.read(AppConstant.appUser)));
     super.onInit();
+  }
+
+  Future<void> refreshUser() async {
+    currentUser.value =
+        Account.fromJson(jsonDecode(_storage.read(AppConstant.appUser)));
   }
 
   void handleMenuTap(int index) {
     // if logout
     if (menuData[index].to == AppRoutes.login) {
-      GetStorage _storage = GetStorage('evds_examinee');
-      _storage.remove("access_token");
-      _storage.remove("refresh_token");
-      _storage.remove("user");
+      GetStorage _storage = GetStorage(AppConstant.storageKey);
+      _storage.remove(AppConstant.accessToken);
+      _storage.remove(AppConstant.refreshToken);
+      _storage.remove(AppConstant.appUser);
     }
-    // FIXME: Remove if when settings and term is initialize
     if (menuData[index].to == AppRoutes.changePassword) {
       Get.toNamed(menuData[index].to);
     }

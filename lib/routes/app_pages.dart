@@ -1,23 +1,16 @@
-import 'package:evds_examinee/screens/change_password/change_password.dart';
-import 'package:evds_examinee/screens/change_password/change_password_binding.dart';
-import 'package:evds_examinee/screens/detail_feedback/detail_feedback.dart';
-import 'package:evds_examinee/screens/detail_feedback/detail_feedback_binding.dart';
-import 'package:evds_examinee/screens/detail_profile/detail_profile.dart';
-import 'package:evds_examinee/screens/detail_profile/detail_profile_binding.dart';
-import 'package:evds_examinee/screens/detail_violation/detail_violation.dart';
-import 'package:evds_examinee/screens/detail_violation/detail_violation_binding.dart';
-import 'package:evds_examinee/screens/feedback/feedback.dart';
-import 'package:evds_examinee/screens/feedback/feedback_binding.dart';
-import 'package:evds_examinee/screens/home/home.dart';
-import 'package:evds_examinee/screens/home/home_binding.dart';
-import 'package:evds_examinee/screens/login/login.dart';
-import 'package:evds_examinee/screens/login/login_binding.dart';
-import 'package:evds_examinee/screens/main/main_binding.dart';
-import 'package:evds_examinee/screens/main/main_screen.dart';
-import 'package:evds_examinee/screens/shift/shift.dart';
-import 'package:evds_examinee/screens/shift/shift_binding.dart';
-import 'package:evds_examinee/screens/violation/violation.dart';
-import 'package:evds_examinee/screens/violation/violation_binding.dart';
+import 'package:valua_examinee/screens/change_password/change_password.dart';
+import 'package:valua_examinee/screens/change_password/change_password_binding.dart';
+import 'package:valua_examinee/screens/detail_profile/detail_profile.dart';
+import 'package:valua_examinee/screens/detail_profile/detail_profile_binding.dart';
+import 'package:valua_examinee/screens/home/home.dart';
+import 'package:valua_examinee/screens/home/home_binding.dart';
+import 'package:valua_examinee/screens/login/login.dart';
+import 'package:valua_examinee/screens/login/login_binding.dart';
+import 'package:valua_examinee/screens/main/main_binding.dart';
+import 'package:valua_examinee/screens/main/main_screen.dart';
+import 'package:valua_examinee/screens/qr_scanner/qr_scanner.dart';
+import 'package:valua_examinee/screens/shift/shift.dart';
+import 'package:valua_examinee/screens/shift/shift_binding.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
@@ -28,7 +21,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: AppRoutes.login,
-      page: () => const LoginScreen(),
+      page: () => LoginScreen(),
       transition: Transition.rightToLeft,
       binding: LoginBinding(),
     ),
@@ -41,26 +34,6 @@ class AppPages {
       name: AppRoutes.shift,
       page: () => const ShiftScreen(),
       binding: ShiftBinding(),
-    ),
-    GetPage(
-      name: AppRoutes.violation,
-      page: () => const ViolationScreen(),
-      binding: ViolationBinding(),
-    ),
-    GetPage(
-      name: AppRoutes.feedback,
-      page: () => const FeedbackScreen(),
-      binding: FeedbackBinding(),
-    ),
-    GetPage(
-      name: AppRoutes.detailFeedback,
-      page: () => const DetailFeedbackScreen(),
-      binding: DetailFeedbackBinding(),
-    ),
-    GetPage(
-      name: AppRoutes.detailViolation,
-      page: () => const DetailViolationScreen(),
-      binding: DetailViolationBinding(),
     ),
     GetPage(
       name: AppRoutes.detailProfile,
@@ -76,6 +49,10 @@ class AppPages {
       name: AppRoutes.main,
       page: () => const MainScreen(),
       binding: MainBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.qr,
+      page: () => const QRScannerScreen(),
     )
   ];
 }

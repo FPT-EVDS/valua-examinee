@@ -1,23 +1,26 @@
 import 'package:animations/animations.dart';
+import 'package:badges/badges.dart';
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:evds_examinee/screens/home/home.dart';
-import 'package:evds_examinee/screens/main/main_controller.dart';
-import 'package:evds_examinee/screens/notification/notification.dart';
-import 'package:evds_examinee/screens/profile/profile.dart';
+import 'package:valua_examinee/routes/app_pages.dart';
+import 'package:valua_examinee/screens/home/home.dart';
+import 'package:valua_examinee/screens/main/main_controller.dart';
+import 'package:valua_examinee/screens/notification/notification.dart';
+import 'package:valua_examinee/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:valua_examinee/services/local_notification_service.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<MainController>();
+    final _controller = Get.find<MainController>();
 
     return Obx(
       () => Scaffold(
         appBar: PreferredSize(
-          preferredSize: controller.tabIndex.value == 2
+          preferredSize: _controller.tabIndex.value == 2
               ? const Size(0, 0)
               : AppBar().preferredSize,
           child: AppBar(
@@ -25,20 +28,33 @@ class MainScreen extends StatelessWidget {
             elevation: 0,
             centerTitle: true,
             title: Obx(
-              () => controller.tabIndex.value == 0
+              () => _controller.tabIndex.value == 0
                   ? Image.asset(
-                      "assets/icons/evds_logo_right.png",
+                      "assets/icons/valua.png",
                       height: 96,
                       width: 96,
                     )
                   : Text(
-                      controller.appBarTitle.value,
+                      _controller.appBarTitle.value,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 18,
                       ),
                     ),
             ),
+            actions: _controller.tabIndex.value == 0
+                ? [
+                    IconButton(
+                      onPressed: () async {
+                        final roomId = await Get.toNamed(AppRoutes.qr);
+                        if (roomId != null) {
+                          _controller.checkInAttendance(roomId.toString());
+                        }
+                      },
+                      icon: const Icon(CommunityMaterialIcons.qrcode_scan),
+                    )
+                  ]
+                : [],
           ),
         ),
         body: SafeArea(
@@ -52,8 +68,8 @@ class MainScreen extends StatelessWidget {
                 secondaryAnimation: secondaryAnimation,
               ),
               child: IndexedStack(
-                key: ValueKey<int>(controller.tabIndex.value),
-                index: controller.tabIndex.value,
+                key: ValueKey<int>(_controller.tabIndex.value),
+                index: _controller.tabIndex.value,
                 children: const [
                   HomeScreen(),
                   NotificationScreen(),
@@ -66,22 +82,29 @@ class MainScreen extends StatelessWidget {
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            onTap: controller.changeTabIndex,
-            currentIndex: controller.tabIndex.value,
+            onTap: _controller.changeTabIndex,
+            currentIndex: _controller.tabIndex.value,
             unselectedFontSize: 12,
             selectedFontSize: 12,
-            items: const [
-              BottomNavigationBarItem(
+            items: [
+              const BottomNavigationBarItem(
                 icon: Icon(CommunityMaterialIcons.home_outline),
                 activeIcon: Icon(CommunityMaterialIcons.home),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(CommunityMaterialIcons.bell_outline),
-                activeIcon: Icon(CommunityMaterialIcons.bell),
+                icon: Obx(
+                  () => Badge(
+                    child: const Icon(CommunityMaterialIcons.bell_outline),
+                    showBadge: LocalNotificationService.hasUnreadMessage.value,
+                    elevation: 0,
+                    position: BadgePosition.topEnd(top: 0, end: 0),
+                  ),
+                ),
+                activeIcon: const Icon(CommunityMaterialIcons.bell),
                 label: 'Notification',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(CommunityMaterialIcons.account_circle_outline),
                 activeIcon: Icon(CommunityMaterialIcons.account_circle),
                 label: 'Profile',

@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:evds_examinee/screens/detail_profile/detail_profile_controller.dart';
-import 'package:evds_examinee/widgets/cached_circle_avatar.dart';
-import 'package:evds_examinee/widgets/round_button.dart';
+import 'package:valua_examinee/screens/detail_profile/detail_profile_controller.dart';
+import 'package:valua_examinee/widgets/cached_circle_avatar.dart';
+import 'package:valua_examinee/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
@@ -28,10 +30,22 @@ class DetailProfileScreen extends StatelessWidget {
               children: <Widget>[
                 Center(
                   child: GestureDetector(
-                    onTap: () {},
-                    child: CachedCircleAvatar(
-                      imageUrl: _controller.currentUser.imageUrl.toString(),
-                      radius: 45,
+                    onTap: () {
+                      _controller.pickImage();
+                    },
+                    child: Obx(
+                      () => _controller.image.value == null
+                          ? CachedCircleAvatar(
+                              imageUrl: _controller.currentUser.imageUrl,
+                              radius: 45,
+                            )
+                          : CircleAvatar(
+                              radius: 45,
+                              backgroundImage: Image.file(
+                                File(_controller.image.value!.path.toString()),
+                                fit: BoxFit.cover,
+                              ).image,
+                            ),
                     ),
                   ),
                 ),
@@ -45,10 +59,23 @@ class DetailProfileScreen extends StatelessWidget {
                       TextFormField(
                         controller: _controller.emailController,
                         readOnly: true,
+                        enabled: false,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           labelText: "Email",
                         ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: _controller.fullNameController,
+                        decoration: const InputDecoration(
+                          labelText: "Fullname",
+                        ),
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: "Fullname is required"),
+                        ]),
                       ),
                       const SizedBox(
                         height: 20,

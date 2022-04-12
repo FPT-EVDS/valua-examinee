@@ -1,4 +1,4 @@
-package com.example.evds_examinee
+package com.example.valua_examinee
 
 import io.flutter.embedding.android.FlutterActivity
 

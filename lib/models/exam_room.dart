@@ -1,6 +1,6 @@
-import 'package:evds_examinee/models/account_alternative.dart';
-import 'package:evds_examinee/models/room.dart';
-import 'package:evds_examinee/models/subject.dart';
+import 'package:valua_examinee/models/account_alternative.dart';
+import 'package:valua_examinee/models/room.dart';
+import 'package:valua_examinee/models/subject.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'exam_room.g.dart';
 

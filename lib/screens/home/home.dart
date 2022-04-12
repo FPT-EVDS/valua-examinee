@@ -1,9 +1,9 @@
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:evds_examinee/models/assigned_shift.dart';
-import 'package:evds_examinee/routes/app_pages.dart';
-import 'package:evds_examinee/screens/home/home_controller.dart';
-import 'package:evds_examinee/widgets/card_with_icon.dart';
-import 'package:evds_examinee/widgets/shift_card.dart';
+import 'package:valua_examinee/models/assigned_shift.dart';
+import 'package:valua_examinee/routes/app_pages.dart';
+import 'package:valua_examinee/screens/home/home_controller.dart';
+import 'package:valua_examinee/widgets/card_with_icon.dart';
+import 'package:valua_examinee/widgets/shift_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -33,27 +33,69 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             FutureBuilder(
-              future: _controller.assignedShiftList.value,
+              future: _controller.assignedShiftFuture.value,
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
                   AssignedShift data = snapshot.data;
-                  final assignedShiftDetail = data.assignedShifts[0];
-                  return ShiftCard(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.shift, arguments: {
-                        "semesterId": data.selectedSemester.semesterId
-                      });
-                    },
-                    thumbnail: SvgPicture.asset(
-                      'assets/images/exam.svg',
-                      semanticsLabel: "Schedule illustration",
-                      height: 100,
-                    ),
-                    beginTime: assignedShiftDetail.shift.beginTime,
-                    endTime: assignedShiftDetail.shift.finishTime,
-                    date: assignedShiftDetail.shift.beginTime,
-                    location: assignedShiftDetail.room.roomName,
-                  );
+                  final currentShift = data.currentShift;
+                  final nextShift = data.nextShift;
+                  return currentShift != null
+                      ? ShiftCard(
+                          onTap: () {
+                            Get.toNamed(AppRoutes.shift, arguments: {
+                              "semesterId": data.selectedSemester.semesterId,
+                            });
+                          },
+                          thumbnail: SvgPicture.asset(
+                            'assets/images/exam.svg',
+                            semanticsLabel: "Schedule illustration",
+                            height: 100,
+                          ),
+                          beginTime: currentShift.shift.beginTime.toLocal(),
+                          endTime: currentShift.shift.finishTime.toLocal(),
+                          date: currentShift.shift.beginTime.toLocal(),
+                          location: currentShift.room.roomName,
+                        )
+                      : nextShift != null
+                          ? ShiftCard(
+                              onTap: () {
+                                Get.toNamed(AppRoutes.shift, arguments: {
+                                  "semesterId":
+                                      data.selectedSemester.semesterId,
+                                });
+                              },
+                              thumbnail: SvgPicture.asset(
+                                'assets/images/exam.svg',
+                                semanticsLabel: "Schedule illustration",
+                                height: 100,
+                              ),
+                              beginTime: nextShift.shift.beginTime.toLocal(),
+                              endTime: nextShift.shift.finishTime.toLocal(),
+                              date: nextShift.shift.beginTime.toLocal(),
+                              location: nextShift.room.roomName,
+                            )
+                          : Card(
+                              elevation: 2,
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 150,
+                                child: Column(children: [
+                                  SvgPicture.asset(
+                                    'assets/images/relax.svg',
+                                    semanticsLabel: "Schedule illustration",
+                                    height: 100,
+                                  ),
+                                  const SizedBox(height: 15),
+                                  Text(
+                                    "No shifts available!",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                ]),
+                              ),
+                            );
                 } else if (snapshot.hasError) {
                   return Card(
                     elevation: 2,
@@ -113,28 +155,6 @@ class HomeScreen extends StatelessWidget {
                   title: "Schedule",
                   onTap: () {
                     Get.toNamed(AppRoutes.shift);
-                  },
-                ),
-                CardWithIcon(
-                  icon: Icon(
-                    CommunityMaterialIcons.alarm_light,
-                    size: 70,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  title: "Violation",
-                  onTap: () {
-                    Get.toNamed(AppRoutes.violation);
-                  },
-                ),
-                CardWithIcon(
-                  icon: Icon(
-                    CommunityMaterialIcons.file_document,
-                    size: 70,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  title: "Feedbacks",
-                  onTap: () {
-                    Get.toNamed(AppRoutes.feedback);
                   },
                 ),
               ],

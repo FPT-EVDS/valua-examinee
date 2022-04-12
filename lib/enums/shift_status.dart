@@ -2,13 +2,17 @@ import 'package:json_annotation/json_annotation.dart';
 
 enum ShiftStatus {
   @JsonValue(0)
-  inactive,
+  removed,
   @JsonValue(1)
-  notReady,
+  finished,
   @JsonValue(2)
-  ready,
+  locked,
   @JsonValue(3)
-  onGoing,
+  ready,
   @JsonValue(4)
-  finished
+  notReady,
+  @JsonValue(5)
+  staffing,
+  @JsonValue(6)
+  ongoing,
 }

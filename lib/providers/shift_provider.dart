@@ -1,7 +1,7 @@
-import 'package:evds_examinee/models/assigned_shift.dart';
-import 'package:evds_examinee/models/shift_detail.dart';
-import 'package:evds_examinee/providers/base_provider.dart';
-import 'package:evds_examinee/repository/shift_repository.dart';
+import 'package:valua_examinee/models/assigned_shift.dart';
+import 'package:valua_examinee/models/shift_detail.dart';
+import 'package:valua_examinee/providers/base_provider.dart';
+import 'package:valua_examinee/repository/shift_repository.dart';
 
 class ShiftProvider extends BaseProvider implements ShiftRepository {
   @override

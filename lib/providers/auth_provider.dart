@@ -1,13 +1,13 @@
-import 'dart:convert';
-
-import 'package:evds_examinee/models/account.dart';
-import 'package:evds_examinee/models/app_user.dart';
-import 'package:evds_examinee/providers/base_provider.dart';
-import 'package:evds_examinee/repository/auth_repository.dart';
+import 'package:get/get.dart';
+import 'package:valua_examinee/constants/app.dart';
+import 'package:valua_examinee/models/account.dart';
+import 'package:valua_examinee/models/app_user.dart';
+import 'package:valua_examinee/providers/base_provider.dart';
+import 'package:valua_examinee/repository/auth_repository.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AuthProvider extends BaseProvider implements AuthRepository {
-  final GetStorage _storage = GetStorage('evds_examinee');
+  final GetStorage _storage = GetStorage(AppConstant.storageKey);
 
   @override
   Future<AppUser> login(String email, String password) async {
@@ -26,7 +26,7 @@ class AuthProvider extends BaseProvider implements AuthRepository {
     final response = await get(
       "/authentication/refreshToken",
       headers: {
-        "refreshToken": _storage.read("refresh_token").toString(),
+        "refreshToken": _storage.read(AppConstant.refreshToken).toString(),
       },
     );
     if (response.status.hasError) {
@@ -45,10 +45,10 @@ class AuthProvider extends BaseProvider implements AuthRepository {
   }
 
   @override
-  Future<Account> updateProfile(Account newProfile) async {
+  Future<Account> updateProfile(FormData newProfile) async {
     final response = await put(
       "/authentication/profile",
-      jsonEncode(newProfile),
+      newProfile,
     );
     if (response.status.hasError) {
       throw (response.body);
@@ -67,5 +67,14 @@ class AuthProvider extends BaseProvider implements AuthRepository {
       throw (response.body);
     }
     return response.body;
+  }
+
+  @override
+  Future<AppUser> loginWithGoogle(String idToken) async {
+    final response = await post("/authentication/verify/firebase", idToken);
+    if (response.status.hasError) {
+      throw (response.body);
+    }
+    return AppUser.fromJson(response.body);
   }
 }

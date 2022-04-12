@@ -1,19 +1,21 @@
-import 'package:evds_examinee/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:valua_examinee/constants/app.dart';
+import 'package:valua_examinee/routes/app_pages.dart';
 
 class AuthService extends GetxService {
-  final _storage = GetStorage('evds_examinee');
+  final _storage = GetStorage(AppConstant.storageKey);
   String? token;
 
   @override
   void onInit() {
-    token = _storage.read('access_token');
-    _storage.listenKey('access_token', (value) {
+    token = _storage.read(AppConstant.accessToken);
+    _storage.listenKey(AppConstant.accessToken, (value) {
       if (value == null) {
         Get.offAllNamed(AppRoutes.login);
+      } else {
+        token = value.toString();
       }
-      token = value.toString();
     });
     super.onInit();
   }

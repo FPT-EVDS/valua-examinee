@@ -1,6 +1,6 @@
 import 'package:cool_alert/cool_alert.dart';
-import 'package:evds_examinee/providers/auth_provider.dart';
-import 'package:evds_examinee/repository/auth_repository.dart';
+import 'package:valua_examinee/providers/auth_provider.dart';
+import 'package:valua_examinee/repository/auth_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
